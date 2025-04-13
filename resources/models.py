@@ -1,7 +1,10 @@
 from django.db import models
-
+import uuid
 # Create your models here.
 class EducationResource(models.Model):
+
+    #define uuid as the primary key
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # choices
     DISEASE = [('common_rust','Common Rust'),('healthy','Healthy'),('other_disease','Other disease')]
     RESOURCE_TYPE = [('article','Article'),('video','Video')] 

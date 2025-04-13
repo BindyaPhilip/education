@@ -1,46 +1,50 @@
-# Import Django's admin module to manage models via the admin interface
+# Import Django's admin module for admin interface management
 from django.contrib import admin
-# Import format_html to create clickable links in the admin
+# Import format_html for clickable links
 from django.utils.html import format_html
 # Import Count for analytics
 from django.db.models import Count
 
-# Import the EducationalResource model from the current app
+# Import the model
 from .models import EducationResource
 
-# Register the model with the admin site
+# Register the model with the admin
 @admin.register(EducationResource)
 class EducationalResourceAdmin(admin.ModelAdmin):
-    # Display these fields in the list view for a quick overview
+    # Fields to show in the list view
     list_display = ('title', 'disease', 'resource_type', 'url_link', 'created_at')
     
-    # Allow filtering by disease and resource type in the sidebar
-    list_filter = ('disease', 'resource_type')
-    # This makes 'title' the clickable link to the edit page
+    # Set 'title' as the clickable link to avoid list_editable conflicts
     list_display_links = ('title',)
-    # Enable searching by title and description for easy lookup
+    
+    # Allow inline editing of non-link fields
+    list_editable = ('disease', 'resource_type')
+    
+    # Filter by disease and resource type
+    list_filter = ('disease', 'resource_type')
+    
+    # Search by title and description
     search_fields = ('title', 'description')
     
-    # Allow inline editing of title and URL for convenience
-    list_editable = ('disease','resource_type')
-    
-    # Custom method to display URL as a clickable link
+    # Display URL as a clickable link
     def url_link(self, obj):
         return format_html('<a href="{}" target="_blank">{}</a>', obj.url, obj.url)
-    url_link.short_description = 'Resource URL' # type: ignore[attr-defined]
+    # Set column header; suppress Mypy error
+    url_link.short_description = 'Resource URL'  # type: ignore[attr-defined]
     
-    # Custom action to bulk-update disease
+    # Bulk action to update disease
     def mark_as_common_rust(self, request, queryset):
         queryset.update(disease='common_rust')
-    mark_as_common_rust.short_description = "Mark selected as Common Rust" # type: ignore[attr-defined]
+    mark_as_common_rust.short_description = "Mark selected as Common Rust"  # type: ignore[attr-defined]
     actions = ['mark_as_common_rust']
     
-    # Add analytics for disease counts
+    # Compute resource counts per disease
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         self.disease_counts = qs.values('disease').annotate(count=Count('id'))
         return qs
     
+    # Show counts in the admin
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
         extra_context['disease_counts'] = getattr(self, 'disease_counts', [])
