@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-f(uiqke3n642w2f#e2tccdhaq#6yrrj-%h&(c7u3h!+o(48&7*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','d04f-160-119-149-222.ngrok-free.app']
 
 
 # Application definition
@@ -50,6 +50,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+#Add CSRF trusted origins for Ngrok
+CSRF_TRUSTED_ORIGINS = [
+    'https://1c5b-160-119-149-222.ngrok-free.app',
+    'https://d04f-160-119-149-222.ngrok-free.app',
+    'https://d04f-160-119-149-222.ngrok-free.app'
 ]
 
 ROOT_URLCONF = 'education.urls'
