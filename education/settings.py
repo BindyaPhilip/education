@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+from decouple import config # type: ignore
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-f(uiqke3n642w2f#e2tccdhaq#6yrrj-%h&(c7u3h!+o(48&7*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','d04f-160-119-149-222.ngrok-free.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','e7dd-160-119-149-222.ngrok-free.app']
 
 
 # Application definition
@@ -54,9 +54,7 @@ MIDDLEWARE = [
 
 #Add CSRF trusted origins for Ngrok
 CSRF_TRUSTED_ORIGINS = [
-    'https://1c5b-160-119-149-222.ngrok-free.app',
-    'https://d04f-160-119-149-222.ngrok-free.app',
-    'https://d04f-160-119-149-222.ngrok-free.app'
+   'https://e7dd-160-119-149-222.ngrok-free.app' 
 ]
 
 ROOT_URLCONF = 'education.urls'
