@@ -15,7 +15,7 @@ cryptography==44.0.2
 cycler==0.12.1
 distlib==0.3.9
 dj-database-url==2.2.0
-Django==5.0.1
+Django==4.2.21  # Downgraded from 5.0.1 for Python 3.9 compatibility
 django-admin-soft-dashboard==1.0.12
 django-celery-results==2.5.1
 django-cors-headers==4.7.0
